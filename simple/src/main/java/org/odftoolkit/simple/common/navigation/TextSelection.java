@@ -135,7 +135,7 @@ public class TextSelection extends Selection {
 			String text, OdfElement containerElement, int index) {
 		TextSelection selection = new TextSelection(search, text,
 				containerElement, index);
-		Selection.SelectionManager.registerItem(selection);
+        search.mDocument.getSelectionManager().registerItem(selection);
 		return selection;
 	}
 
@@ -199,7 +199,7 @@ public class TextSelection extends Selection {
 		}
 		OdfElement container = getContainerElement();
 		delete(mIndexInContainer, mMatchedText.length(), container);
-		SelectionManager.refreshAfterCut(this);
+		search.mDocument.getSelectionManager().refreshAfterCut(this);
 		mMatchedText = "";
 	}
 
@@ -249,7 +249,7 @@ public class TextSelection extends Selection {
 		// optimize the parent element
 		optimize(parentElement);
 		int offset = newText.length() - leftLength;
-		SelectionManager.refresh(getContainerElement(), offset, index + getText().length());
+		search.mDocument.getSelectionManager().refresh(getContainerElement(), offset, index + getText().length());
 		mMatchedText = newText;
 	}
 	
@@ -524,7 +524,7 @@ public class TextSelection extends Selection {
 		mIsInserted = false;
 		insertOdfElement(textSpan, indexOfNew, newElement);
 		adjustStyle(newElement, textSpan, null);
-		SelectionManager.refreshAfterPasteAtFrontOf(this, positionItem);
+		search.mDocument.getSelectionManager().refreshAfterPasteAtFrontOf(this, positionItem);
 	}
 
 	/**
@@ -551,7 +551,7 @@ public class TextSelection extends Selection {
 		mIsInserted = false;
 		insertOdfElement(textSpan, indexOfNew, newElement);
 		adjustStyle(newElement, textSpan, null);
-		SelectionManager.refreshAfterPasteAtEndOf(this, positionItem);
+		search.mDocument.getSelectionManager().refreshAfterPasteAtEndOf(this, positionItem);
 	}
 	public void setSelectionReplaced(boolean b) {
 		this.isSelectionReplaced = b;
@@ -631,7 +631,7 @@ public class TextSelection extends Selection {
 		insertOdfElement(annotationElement, mIndexInContainer, parentElement);
 		// three text length plus two '\r'
 		int offset = content.length() + 1 + dcDate.length() + 1 + creator.length();
-		SelectionManager.refresh(getContainerElement(), offset, getIndex());
+		search.mDocument.getSelectionManager().refresh(getContainerElement(), offset, getIndex());
 	}
 	
 	/**
